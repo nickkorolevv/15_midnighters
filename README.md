@@ -1,7 +1,43 @@
-# Night Owls Detector
 
-[TODO. There will be project description]
 
-# Project Goals
+#  Совы на DEVMAN
+Данный скрипт проверяет, кто отправил задания на проверку после 24:00
 
-The code is written for educational purposes. Training course for web-developers - [DEVMAN.org](https://devman.org)
+# Как установить
+Для работы скрипта Вам потребуется библиотека requests
+Для того, чтобы ее установить выполните следующую команду.
+```bash
+pip install -r requirements.txt # alternatively try pip3
+```
+
+# Быстрый старт
+В командной строке введите
+``` bash 
+python seek_dev_nighters.py 8
+```
+где 10 - число страниц, которое Вы хотите проверить
+
+# Вывод скрипта
+``` bash
+
+Страница 1
+Совы: {}
+Страница 2
+Совы: {'suchkov.dv': '00:50:19', 'id311542249': '02:05:44', 'id93321377': '00:58:20', 'c13cb28b9d05407d': '00:48:11'}
+Страница 3
+Совы: {}
+Страница 4
+Совы: {'dreamfall3r': '01:20:14'}
+Страница 5
+Совы: {'da.dekevich': '01:13:13'}
+Страница 6
+Совы: {'id311542249': '05:29:43', 'khokhlov86': '00:23:07'}
+Страница 7
+Совы: {'dreamfall3r': '03:17:06'}
+Страница 8
+Совы: {'AlenaArise': '00:39:04', 'id311542249': '03:47:55'}
+```
+
+# Цели проекта
+Код создан в учебных целях. В рамках учебного курса по веб-разработке -  [DEVMAN.org](https://devman.org/)
+

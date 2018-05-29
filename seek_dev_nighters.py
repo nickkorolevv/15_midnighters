@@ -48,7 +48,7 @@ def print_midnighters(midnighters):
         print(user, time)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     dev_users = load_data()
     users = get_users(dev_users)
     midnighters = get_midnighters(users)

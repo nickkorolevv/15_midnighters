@@ -1,34 +1,40 @@
 import requests
 import datetime
-import argparse
+import pytz
 
 
-def create_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("pages")
-    return parser
-
-
-def load_data(page_num):
+def load_data():
     url = "https://devman.org/api/challenges/solution_attempts/"
-    page = page_num
-    param = {"page": page}
-    response_from_dev = requests.get(url, params=param)
-    return response_from_dev.json()
+    page = 1
+    number_of_pages = 1
+    while page <= number_of_pages:
+        devman_response = requests.get(url, params={"page": page})
+        page_info = devman_response.json()
+        number_of_pages = int(page_info["number_of_pages"])
+        for record in page_info["records"]:
+            yield record
+        page += 1
 
 
-def get_users(decoded_json):
+def local_time(time_stamp, timezone):
+    local_date_time = datetime.datetime.fromtimestamp(
+        float(time_stamp),
+        tz=pytz.timezone(timezone)
+    )
+    return local_date_time.time()
+
+
+def get_users(dev_users):
     get_users_dict = {}
-    for user in decoded_json["records"]:
-        time = datetime.datetime.fromtimestamp(user["timestamp"])
-        formatted_time = time.strftime('%H:%M:%S')
-        get_users_dict.update({user["username"]: formatted_time})
+    for user in dev_users:
+        time = local_time(user["timestamp"], user["timezone"])
+        get_users_dict.update({user["username"]: time})
     return get_users_dict
 
 
 def get_midnighters(users):
-    night_start = "00:00:00"
-    night_end = "06:00:00"
+    night_start = datetime.time(0, 0, 0)
+    night_end = datetime.time(6, 0, 0)
     midnighters_dict = {}
     for user, time in users.items():
         if night_start <= time < night_end:
@@ -37,16 +43,13 @@ def get_midnighters(users):
 
 
 def print_midnighters(midnighters):
-    print("Совы:", midnighters)
+    print("Совы: ")
+    for user, time in midnighters.items():
+        print(user, time)
 
 
 if __name__ == '__main__':
-    parser = create_parser()
-    namespace = parser.parse_args()
-    pages = int(namespace.pages)
-    for page in range(1, pages):
-        print("Страница {}".format(page))
-        decoded_json = load_data(page)
-        users = get_users(decoded_json)
-        midnighters = get_midnighters(users)
-        print_midnighters(midnighters)
+    dev_users = load_data()
+    users = get_users(dev_users)
+    midnighters = get_midnighters(users)
+    print_midnighters(midnighters)

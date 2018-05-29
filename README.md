@@ -20,8 +20,10 @@ python seek_dev_nighters.py
 ``` bash
 
 Совы:
-id311542249 02:33:51.513633
-dreamfall3r 02:17:06
+id311542249
+id185085967
+dreamfall3r
+
 
 ```
 

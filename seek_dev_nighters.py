@@ -22,17 +22,14 @@ def get_local_time(time_stamp, timezone):
 
 
 def get_midnighters(dev_users):
-    get_users_dict = {}
-    for user in dev_users:
-        time = get_local_time(user["timestamp"], user["timezone"])
-        get_users_dict.update({user["username"]: time})
     night_start = 0
     night_end = 6
-    midnighters_list = []
-    for user, time in get_users_dict.items():
-        if night_start <= time < night_end:
-            midnighters_list.append(user)
-    return midnighters_list
+    get_users_list = []
+    for user in dev_users:
+        time = get_local_time(user["timestamp"], user["timezone"])
+        if night_start <= time <night_end:
+            get_users_list.append(user["username"])
+    return set(get_users_list)
 
 
 def print_midnighters(midnighters):

@@ -34,8 +34,8 @@ def get_midnighters(dev_users):
 
 def print_midnighters(midnighters):
     print("Совы: ")
-    for user in midnighters:
-        print(user)
+    print("\n".join(midnighters))
+
 
 
 if __name__ == "__main__":
